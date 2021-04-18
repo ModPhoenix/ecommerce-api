@@ -40,7 +40,9 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .data(pool.clone())
             .route("/", web::get().to(index))
-            .configure(products::handlers::init)
+            .service(
+                web::scope("/api").service(web::scope("/v1").configure(products::handlers::config)),
+            )
     })
     .bind(addr)?
     .run()

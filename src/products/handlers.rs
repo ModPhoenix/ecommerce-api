@@ -2,9 +2,8 @@ use crate::{
     products::models::{Product, ProductInput},
     types::PostgresPool,
 };
-use actix_web::{delete, get, post, put, web, HttpResponse, Responder};
+use actix_web::{web, HttpResponse, Responder};
 
-#[get("/products")]
 async fn find_all(pool: web::Data<PostgresPool>) -> impl Responder {
     let result = Product::find_all(pool.get_ref()).await;
     match result {
@@ -13,16 +12,6 @@ async fn find_all(pool: web::Data<PostgresPool>) -> impl Responder {
     }
 }
 
-#[get("/products/{id}")]
-async fn find_by_id(id: web::Path<i32>, pool: web::Data<PostgresPool>) -> impl Responder {
-    let result = Product::find_by_id(id.into_inner(), pool.get_ref()).await;
-    match result {
-        Ok(product) => HttpResponse::Ok().json(product),
-        _ => HttpResponse::NotFound().body("Product not found"),
-    }
-}
-
-#[post("/products")]
 async fn create(input: web::Json<ProductInput>, pool: web::Data<PostgresPool>) -> impl Responder {
     let result = Product::create(input.into_inner(), pool.get_ref()).await;
     match result {
@@ -31,7 +20,14 @@ async fn create(input: web::Json<ProductInput>, pool: web::Data<PostgresPool>) -
     }
 }
 
-#[put("/products/{id}")]
+async fn find_by_id(id: web::Path<i32>, pool: web::Data<PostgresPool>) -> impl Responder {
+    let result = Product::find_by_id(id.into_inner(), pool.get_ref()).await;
+    match result {
+        Ok(product) => HttpResponse::Ok().json(product),
+        _ => HttpResponse::NotFound().body("Product not found"),
+    }
+}
+
 async fn update(
     id: web::Path<i32>,
     todo: web::Json<ProductInput>,
@@ -44,7 +40,6 @@ async fn update(
     }
 }
 
-#[delete("/products/{id}")]
 async fn delete(id: web::Path<i32>, db_pool: web::Data<PostgresPool>) -> impl Responder {
     let result = Product::delete(id.into_inner(), db_pool.get_ref()).await;
     match result {
@@ -59,10 +54,16 @@ async fn delete(id: web::Path<i32>, db_pool: web::Data<PostgresPool>) -> impl Re
     }
 }
 
-pub fn init(cfg: &mut web::ServiceConfig) {
-    cfg.service(find_all);
-    cfg.service(find_by_id);
-    cfg.service(create);
-    cfg.service(update);
-    cfg.service(delete);
+pub fn config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::resource("/products")
+            .route(web::get().to(find_all))
+            .route(web::post().to(create)),
+    );
+    cfg.service(
+        web::resource("/products/{id}")
+            .route(web::get().to(find_by_id))
+            .route(web::put().to(update))
+            .route(web::delete().to(delete)),
+    );
 }
