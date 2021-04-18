@@ -1,0 +1,11 @@
+{
+  "name": "rust-ecommerce-api",
+  "description": "Tiny E-commerce RESTful API written on Rust",
+  "repository": "https://github.com/ModPhoenix/ecommerce-api",
+  "success_url": "/",
+  "keywords": ["rust", "actix"],
+  "website": "https://github.com/ModPhoenix/ecommerce-api",
+  "env": {
+    "BUILDPACK_URL": "https://github.com/emk/heroku-buildpack-rust.git"
+  }
+}
