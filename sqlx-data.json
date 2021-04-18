@@ -1,0 +1,218 @@
+{
+  "db": "PostgreSQL",
+  "61995615dd4e075bdaa3552d52ed4db2c88988856e3c4943837db725ab0189ee": {
+    "query": "\n              SELECT * FROM products WHERE id = $1\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 2,
+          "name": "price",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 3,
+          "name": "origin",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "updated_at",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 5,
+          "name": "created_at",
+          "type_info": "Timestamp"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "73a129a6ccf474c65a18f144f7dcab484829662fe3d052a43d133d4c5fd30058": {
+    "query": "\n              UPDATE products SET name = $1, price = $2, origin = $3 WHERE id = $4\n                RETURNING id, name, price, origin, updated_at, created_at\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 2,
+          "name": "price",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 3,
+          "name": "origin",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "updated_at",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 5,
+          "name": "created_at",
+          "type_info": "Timestamp"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Int8",
+          "Text",
+          "Int4"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "8beb8a2e6b9920fb4b0dcd34664230d7af36f988654739ab614d598f36e0ade8": {
+    "query": "\n              SELECT id, name, price, origin, updated_at, created_at\n                  FROM products\n              ORDER BY updated_at\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 2,
+          "name": "price",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 3,
+          "name": "origin",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "updated_at",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 5,
+          "name": "created_at",
+          "type_info": "Timestamp"
+        }
+      ],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "baa1e1d629f925b94fced70b90228ba15265bbababdf5443c12e6d083ad63789": {
+    "query": "DELETE FROM products WHERE id = $1",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      },
+      "nullable": []
+    }
+  },
+  "fbdde056c1e9b249044b410d95fe7152bffbc2d56444d7cbb6275a7d594d84f7": {
+    "query": "\n              INSERT INTO products (name, price, origin) VALUES ($1, $2, $3)\n                RETURNING id, name, price, origin, updated_at, created_at\n            ",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 2,
+          "name": "price",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 3,
+          "name": "origin",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "updated_at",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 5,
+          "name": "created_at",
+          "type_info": "Timestamp"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Int8",
+          "Text"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  }
+}
